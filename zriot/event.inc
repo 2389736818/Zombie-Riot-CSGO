@@ -268,7 +268,10 @@ public Action:PlayerTeam_Post(Handle:event, const String:name[], bool:dontBroadc
 
 public Action:CheckTeam(Handle:timer, any:index)
 {
-    AssignTeamClient(index, IsPlayerAlive(index));
+	if(index > 0 && index <= MaxClients && IsClientInGame(index))
+	{
+		AssignTeamClient(index, IsPlayerAlive(index));
+	}
 }
 
 public Action:PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
