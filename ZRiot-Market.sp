@@ -8,11 +8,12 @@
 enum WeaponType
 {
     Type_Primary,
-    Type_Secondary
+    Type_Secondary,
+	Type_Grenade //add
 }
 
-// Default new String:secondary[128]
-new String:secondary[256] = "weapon_glock, weapon_cz75a, weapon_tec9, weapon_p250, weapon_deagle, weapon_elite, weapon_fiveseven, weapon_hkp2000, weapon_usp_silencer";
+new String:secondary[256] = "weapon_glock, weapon_cz75a, weapon_tec9, weapon_revolver, weapon_p250, weapon_deagle, weapon_elite, weapon_fiveseven, weapon_hkp2000, weapon_usp_silencer";
+new String:grenade[128] = "weapon_hegrenade, weapon_decoy, weapon_molotov, weapon_incgrenade, weapon_flashbang, weapon_smokegrenade"; //add
 
 new Handle:hOnWeaponSelected;
 new Handle:hPostOnWeaponSelected;
@@ -38,16 +39,22 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
 {
     CreateNative("Market_Send", Native_Send);
     CreateNative("Market_GetWeaponIDInfo", Native_GetWeaponIDInfo);
+    
     hOnWeaponSelected = CreateGlobalForward("Market_OnWeaponSelected", ET_Single, Param_Cell, Param_String);
     hPostOnWeaponSelected = CreateGlobalForward("Market_PostOnWeaponSelected", ET_Ignore, Param_Cell, Param_CellByRef);
+    
     return APLRes_Success;
 }
 
 public OnPluginStart()
 {
     LoadTranslations("common.phrases.txt");
+    
+    // ======================================================================
+    
     RegPluginLibrary("market");
-
+    
+    // ======================================================================
     
     offsMoney = FindSendPropInfo("CCSPlayer", "m_iAccount");
     if (offsMoney == -1)
@@ -90,6 +97,7 @@ public OnClientPutInServer(client)
 {
     rebuyWeapons[client][Type_Primary] = -1;
     rebuyWeapons[client][Type_Secondary] = -1;
+    rebuyWeapons[client][Type_Grenade] = -1; //add
 }
 
 public Native_Send(Handle:plugin,  argc)
@@ -235,7 +243,7 @@ EquipWeapon(client, weapon)
     decl String:weaponent[64];
     KvGetString(kvMarket, "weapon", weaponent, sizeof(weaponent), "INVALID WEAPON");
     
-    new weaponindex;
+    new weaponindex = -1; //fix
     
     new WeaponType:type = GetWeaponType(weaponent);
     
@@ -321,6 +329,11 @@ RebuyGuns(client)
     {
         EquipWeapon(client, rebuyWeapons[client][Type_Secondary]);
     }
+	//add
+	if (rebuyWeapons[client][Type_Grenade] != -1)
+	{
+		EquipWeapon(client, rebuyWeapons[client][Type_Grenade]);
+	}
 }
 
 bool:TakePlayerMoney(client, amount)
@@ -365,6 +378,10 @@ WeaponType:GetWeaponType(const String:weapon[])
     {
         return Type_Secondary;
     }
+	else if (StrContains(grenade, weapon, false) > -1) //add
+	{
+		return Type_Grenade;
+	}
 
     return Type_Primary;
 }
