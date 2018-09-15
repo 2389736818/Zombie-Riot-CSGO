@@ -145,7 +145,7 @@ public OnConfigsExecuted()
     decl String:mapconfig[PLATFORM_MAX_PATH];
     
     GetCurrentMap(mapconfig, sizeof(mapconfig));
-    Format(mapconfig, sizeof(mapconfig), "sourcemod/zombieriot/%s.cfg", mapconfig);
+    Format(mapconfig, sizeof(mapconfig), "sourcemod/zriot/%s.cfg", mapconfig);
     
     decl String:path[PLATFORM_MAX_PATH];
     Format(path, sizeof(path), "cfg/%s", mapconfig);
