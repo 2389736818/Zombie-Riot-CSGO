@@ -33,7 +33,6 @@ enum ZRiotSettings
     Handle:CVAR_DIFFICULT_2,
     Handle:CVAR_DIFFICULT_3,
     Handle:CVAR_COOLDOWN,
-	Handle:CVAR_ZOMBIEKNIFE,
 	Handle:CVAR_ZOMBIENAMES,
     Handle:CVAR_ZOMBIEPREFIX,
 	Handle:CVAR_ZOMBIERANDOMNAME,
@@ -79,7 +78,6 @@ CreateCvars()
     gCvars[CVAR_OVERLAYS_HUMAN]        =    CreateConVar("zriot_overlays_human", "overlays/sfzr/humans", "Path to overlay shown when Humans win, when zriot_overlays is 1");
 
     // New CVARS
-    gCvars[CVAR_ZOMBIEKNIFE]           =    CreateConVar("zriot_zombieknife", "weapon_knife_karambit", "Choose the Zombie Knife: weapon_knife_karambit, m9, flip, gut or weapon_bayonet.");
     gCvars[CVAR_DIFFICULT_2]           =    CreateConVar("zriot_difficult_2", "3", "How much players to start Difficult 2? (3: Default)");
     gCvars[CVAR_DIFFICULT_3]           =    CreateConVar("zriot_difficult_3", "6", "How much players to start Difficult 3? (6: Default)");
     gCvars[CVAR_COOLDOWN]              =    CreateConVar("zriot_weaponcooldown", "0", "Enable Weapon Cooldown for different weapons. (0: Default)");
