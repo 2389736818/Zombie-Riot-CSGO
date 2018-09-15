@@ -46,26 +46,17 @@ UpdateHostname()
 
 Zombify(client, zombieid)
 {
-    // Custom
-    decl String:PathKnife[PLATFORM_MAX_PATH];
-    GetConVarString(gCvars[CVAR_ZOMBIEKNIFE], PathKnife, sizeof(PathKnife));
-	// End Custom
-	
     gZombieID[client] = zombieid;
-
+    
     RemoveAllPlayersWeapons(client);
-    new knife = GivePlayerItem(client, PathKnife);
-    EquipPlayerWeapon(client, knife);
-	
-	// Original
-	// new knife = GivePlayerItem(client, "weapon_knife");
-
+    new knife = GivePlayerItem(client, "weapon_knife");
+    
     if (knife != -1)
     {
         SetEntityRenderMode(knife, RENDER_TRANSALPHA);
         SetEntityRenderColor(knife, 255, 255, 255, 0);
     }
-
+    
     ApplyZombieModel(client, zombieid);
     ApplyZombieHealth(client, zombieid);
     ApplyZombieSpeed(client, zombieid);
